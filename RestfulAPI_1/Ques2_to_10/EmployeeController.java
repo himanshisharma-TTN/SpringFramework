@@ -1,11 +1,10 @@
-package com.EmployeeManagment.SpringBoot2;
+package com.EmployeeManagment.RestfulAPI_1.Ques2_to_10;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/emp")
@@ -24,12 +23,26 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Employee> getEmployee(@PathVariable Long id){
+    public Employee getEmployee(@PathVariable Long id){
+        Employee employee = employeeService.getEmployee(id);
+        if (employee==null) throw new EmployeeNotFoundException();
         return employeeService.getEmployee(id);
     }
 
     @PostMapping("/addemp")
-    public Employee createEmployee(@RequestBody Employee employee){
+    public Employee createEmployee(@Valid @RequestBody Employee employee){
         return employeeService.createEmployee(employee);
     }
+
+    @PutMapping("/updateemp")
+    public Employee updateEmployee(@RequestBody Employee employee){
+        return employeeService.updateEmployee(employee);
+    }
+
+    @DeleteMapping("/deleteemp")
+    public String deleteEmployee(@RequestBody Long id){
+        employeeService.deleteEmployee(id);
+        return "Employee Deleted";
+    }
+
 }

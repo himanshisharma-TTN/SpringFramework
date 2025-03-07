@@ -1,10 +1,13 @@
-package com.EmployeeManagment.SpringBoot2;
+package com.EmployeeManagment.RestfulAPI_1.Ques2_to_10;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import org.springframework.lang.NonNull;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 public class Employee {
@@ -21,7 +24,12 @@ public class Employee {
     @Column(nullable = false,unique = true)
     private String email;
 
-//    @NonNull
+    private int age;
+
+    @Column(nullable = false)
+    private LocalDate dateOfBirth;
+
+    @Column(nullable = false)
     private String department;
 
     public Long getId() {
@@ -63,5 +71,24 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public int getAge() {
+        if (this.dateOfBirth == null) {
+            return 0;
+        }
+        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
